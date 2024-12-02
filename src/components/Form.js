@@ -9,6 +9,7 @@ import {
 import { DateField, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+const { ipcRenderer } = window.electron;
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -38,10 +39,15 @@ const Form = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form Submitted:", formData);
-    // Add your submit logic here
+    const response = await ipcRenderer.invoke("save-excel", formData);
+
+    if (response.success) {
+      alert(response.message);
+    } else {
+      console.error(response.message);
+    }
   };
 
   return (
