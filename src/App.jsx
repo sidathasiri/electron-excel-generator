@@ -1,5 +1,6 @@
 import React from "react";
+import Form from "./components/Form";
 
 export default function App() {
-  return <h1>App component</h1>;
+  return <Form />;
 }
